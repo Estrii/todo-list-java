@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class ToDoApp {
+
+    static String[][] tasks = new String[100][5];
+    static int count = 0;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n--- TO DO LIST ---");
+            System.out.println("1. Shto detyre");
+            System.out.println("2. Shfaq detyrat");
+            System.out.println("3. Ndrysho statusin");
+            System.out.println("4. Fshi detyre");
+            System.out.println("0. Dil");
+            System.out.print("Zgjedhja: ");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> addTask(sc);
+                case 2 -> showTasks();
+                case 3 -> markDone(sc);
+                case 4 -> deleteTask(sc);
+            }
+        } while (choice != 0);
+
+        sc.close();
+    }
+
+    static void addTask(Scanner sc) {
+        System.out.print("Emri: ");
+        tasks[count][0] = sc.nextLine();
+        System.out.print("Pershkrimi: ");
+        tasks[count][1] = sc.nextLine();
+        tasks[count][2] = "Pending";
+        System.out.print("Prioriteti (1-5): ");
+        tasks[count][3] = sc.nextLine();
+        System.out.print("Kategoria: ");
+        tasks[count][4] = sc.nextLine();
+        count++;
+    }
+
+    static void showTasks() {
+        for (int i = 0; i < count; i++) {
+            System.out.println(i + ". " + tasks[i][0] +
+                    " | " + tasks[i][1] +
+                    " | " + tasks[i][2] +
+                    " | Priority: " + tasks[i][3] +
+                    " | Category: " + tasks[i][4]);
+        }
+    }
+
+    static void markDone(Scanner sc) {
+        System.out.print("Index i detyres: ");
+        int i = sc.nextInt();
+        if (i >= 0 && i < count) {
+            tasks[i][2] = "Done";
+        }
+    }
+
+    static void deleteTask(Scanner sc) {
+        System.out.print("Index i detyres: ");
+        int i = sc.nextInt();
+        if (i >= 0 && i < count) {
+            for (int j = i; j < count - 1; j++) {
+                tasks[j] = tasks[j + 1];
+            }
+            count--;
+        }
+    }
+}
